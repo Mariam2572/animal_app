@@ -1,4 +1,6 @@
 import 'package:animal_app/Core/theme/app_theme.dart';
+import 'package:animal_app/Core/utils/routing/app_routes.dart';
+import 'package:animal_app/Core/utils/routing/routes_genrator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,9 +18,10 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       child: MaterialApp(
         theme: AppTheme.theme,
+        onGenerateRoute: (settings) => generateRoute(settings),
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRoutes.homeScreen,
       ),
     );
   }
 }
-
-// api key: live_LJqbxLYW43N9hXFna6P3ss9wKlrIMyoRN6oRXtw416igkcoG2kXkFCNRxg3JMt1k

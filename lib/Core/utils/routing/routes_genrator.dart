@@ -1,21 +1,15 @@
 
 import 'package:animal_app/Core/utils/routing/app_routes.dart';
+import 'package:animal_app/features/Favorite/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case AppRoutes.homeScreen:
-      // return MaterialPageRoute(
-      //   builder: (_) => BlocProvider(
-      //     create: (context) => HomeCubit(getIt<HomeRepoContract>())
-      //       ..getCategories()
-      //       ..getProducts(
-      //         body: ProductBody(page: 1, pageSize: 10),
-      //       ),
-      //     child: HomeScreen(),
-      //   ),
-      // );
+      return MaterialPageRoute(
+        builder: (_) => HomeScreen(),
+      );
     
       // return MaterialPageRoute(
       //   builder: (_) => ProductsScreen(
