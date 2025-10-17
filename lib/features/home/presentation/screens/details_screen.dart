@@ -1,6 +1,6 @@
 import 'package:animal_app/Core/helper/helper_extention.dart';
 import 'package:animal_app/Core/theme/app_color.dart';
-import 'package:animal_app/features/Favorite/widgets/chip_widget.dart';
+import 'package:animal_app/features/home/presentation/widgets/chip_widget.dart';
 import 'package:flutter/material.dart';
 
 

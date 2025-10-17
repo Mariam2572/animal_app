@@ -1,6 +1,6 @@
 import 'package:animal_app/Core/theme/app_color.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 class PetCard extends StatelessWidget {
   final String name;
   final String gender;
@@ -33,12 +33,24 @@ class PetCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                image,
+              child: CachedNetworkImage(
+                imageUrl: image,
                 width: 80,
-                height: 80,
+                height: 100,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
+                // placeholder: (context, url) {
+                //   return Container(
+                //     width: 80,
+                //     height: 100,
+                //     color: AppColor.lightCyan,
+                //     child: Center(
+                //       child: CircularProgressIndicator(
+                //         color: AppColor.primary,
+                //       ),
+                //     ),
+                //   );
+                // },
+                errorWidget: (context, error, stackTrace) {
                   return Container(
                     width: 80,
                     height: 80,

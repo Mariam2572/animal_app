@@ -14,6 +14,12 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
+import '../../features/home/data/repos/data_source/breeds_remote_data_source.dart'
+    as _i185;
+import '../../features/home/data/repos/data_source/breeds_remote_imp.dart'
+    as _i259;
+import '../../features/home/data/repos/repo/breeds_repo.dart' as _i631;
+import '../../features/home/data/repos/repo/breeds_repo_impl.dart' as _i228;
 import '../Network%20copy/api_services.dart' as _i492;
 import '../Network%20copy/dio_modul.dart' as _i132;
 
@@ -33,6 +39,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i492.ApiService>(
       () => dioModule.provideApiService(gh<_i361.Dio>()),
+    );
+    gh.factory<_i185.BreedsRemoteContract>(
+      () => _i259.BreedsRemoteImp(gh<_i492.ApiService>()),
+    );
+    gh.factory<_i631.BreedsRepoContract>(
+      () => _i228.BreedsRepoImpl(gh<_i185.BreedsRemoteContract>()),
     );
     return this;
   }
