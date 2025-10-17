@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 
 
 class PetDetailsScreen extends StatelessWidget {
-  final Map<String, dynamic> pet;
+  final Map<String, dynamic> pet= {
+    'name': 'Tom',
+    'image': 'assets/images/dog.png',
+    'distance': '2.5 km away',
+  };
 
-  const PetDetailsScreen({
-    Key? key,
-    required this.pet,
-  }) : super(key: key);
+ PetDetailsScreen({
+    super.key,
+    
+  });
 
   @override
   Widget build(BuildContext context) {

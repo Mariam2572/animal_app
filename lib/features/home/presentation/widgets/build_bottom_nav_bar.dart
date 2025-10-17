@@ -3,14 +3,15 @@ import 'package:animal_app/Core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
-class BottomNavBar extends StatelessWidget {
+class BottomNavBar extends StatelessWidget { // ← غير من StatefulWidget
   final int currentIndex;
+  final ValueChanged<int> onTabChanged; // ← أضف هذا
 
   const BottomNavBar({
-    Key? key,
+    super.key,
     required this.currentIndex,
-  }) : super(key: key);
+    required this.onTabChanged, // ← أضف هذا
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,26 +32,10 @@ class BottomNavBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildNavItem(
-                icon: AppAssets.homeIcon,
-                isSelected: currentIndex == 0,
-                onTap: () {},
-              ),
-              _buildNavItem(
-                icon: AppAssets.favoriteIcon,
-                isSelected: currentIndex == 1,
-                onTap: () {},
-              ),
-              _buildNavItem(
-                icon: AppAssets.chatIcon,
-                isSelected: currentIndex == 2,
-                onTap: () {},
-              ),
-              _buildNavItem(
-                icon: AppAssets.profileIcon,
-                isSelected: currentIndex == 3,
-                onTap: () {},
-              ),
+              _buildNavItem(icon: AppAssets.homeIcon, index: 0),
+              _buildNavItem(icon: AppAssets.favoriteIcon, index: 1),
+              _buildNavItem(icon: AppAssets.chatIcon, index: 2),
+              _buildNavItem(icon: AppAssets.profileIcon, index: 3),
             ],
           ),
         ),
@@ -60,12 +45,15 @@ class BottomNavBar extends StatelessWidget {
 
   Widget _buildNavItem({
     required String icon,
-    required bool isSelected,
-    required VoidCallback onTap,
+    required int index,
   }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    final isSelected = currentIndex == index;
+
+    return InkWell(
+      onTap: () => onTabChanged(index), // ← استدعاء الـ callback
+      borderRadius: BorderRadius.circular(12),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: isSelected ? AppColor.primary : Colors.transparent,
@@ -75,7 +63,10 @@ class BottomNavBar extends StatelessWidget {
           icon,
           width: 24,
           height: 24,
-          color: isSelected ? AppColor.whiteColor : AppColor.gray,
+          colorFilter: ColorFilter.mode(
+            isSelected ? AppColor.whiteColor : AppColor.gray,
+            BlendMode.srcIn,
+          ),
         ),
       ),
     );

@@ -1,20 +1,32 @@
 import 'package:animal_app/Core/config/di.dart';
 import 'package:animal_app/Core/utils/routing/app_routes.dart';
+import 'package:animal_app/features/Favorite/cubit/favorite_cubit.dart';
 import 'package:animal_app/features/home/data/repos/repo/breeds_repo.dart';
 import 'package:animal_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:animal_app/features/home/presentation/screens/home_screen.dart';
+import 'package:animal_app/features/layout/main_navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
-    case AppRoutes.homeScreen:
+    case AppRoutes.mainNavigationScreen:
       return MaterialPageRoute(
-        builder: (_) => BlocProvider(
-          create: (context) => HomeCubit(getIt.get<BreedsRepoContract>())..getBreeds(),
-          child: HomeScreen(),
+        builder: (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) =>
+                  HomeCubit(getIt.get<BreedsRepoContract>())..getBreeds(),
+            ),
+            BlocProvider(
+              create: (context) => FavoriteCubit()
+            ),
+          ],
+          child: const MainNavigationScreen(),
         ),
       );
+    case AppRoutes.homeScreen:
+      return MaterialPageRoute(builder: (_) => HomeScreen());
 
     default:
       return MaterialPageRoute(

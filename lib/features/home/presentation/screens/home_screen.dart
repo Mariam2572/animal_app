@@ -1,7 +1,6 @@
 import 'package:animal_app/Core/theme/app_color.dart';
 import 'package:animal_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:animal_app/features/home/presentation/screens/details_screen.dart';
-import 'package:animal_app/features/home/presentation/widgets/build_bottom_nav_bar.dart';
 import 'package:animal_app/features/home/presentation/widgets/pet_card_widget.dart';
 import 'package:animal_app/features/home/presentation/widgets/search_field.dart';
 import 'package:animal_app/features/home/presentation/widgets/static_tabs.dart';
@@ -10,44 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final List<Map<String, dynamic>> pets = [
-    {
-      'name': 'Joli',
-      'gender': 'Female',
-      'age': '5 Months Old',
-      'distance': '1.6 km away',
-      'image': 'assets/images/cat.jpg',
-    },
-    {
-      'name': 'Tom',
-      'gender': 'Male',
-      'age': '1 year Old',
-      'distance': '2.7 km away',
-      'image': 'assets/images/beagle.jpg',
-    },
-    {
-      'name': 'Oliver',
-      'gender': 'Male &Female',
-      'age': '3 Months Old',
-      'distance': '2 km away',
-      'image': 'assets/images/birds.jpg',
-    },
-    {
-      'name': 'Shelly',
-      'gender': 'Female',
-      'age': '1.5 year Old',
-      'distance': '3 km away',
-      'image': 'assets/images/dog.jpg',
-    },
-  ];
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -77,27 +40,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Skeletonizer(
                         enabled: true,
                         child: ListView.separated(
-                          itemCount: state.breeds.length,
+                          itemCount: 5,
                           separatorBuilder: (context, index) =>
                               const SizedBox(height: 16),
                           itemBuilder: (context, index) {
-                          
-                            if (state.state.isSuccess) {
-                              return PetCard(
-                                name:  'No Name',
-                                gender: 'No Gender',
-                                age: 'No Age',
-                                distance:  'No Distance',
-                                image:  'No Image',
-                                onTap: () {
-                                  
-                                },
-                              );
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
+                            return PetCard(
+                              name: 'No Name',
+                              gender: 'No Gender',
+                              age: 'No Age',
+                              distance: 'No Distance',
+                              image: 'No Image',
+                              onTap: () {},
+                            );
                           },
                         ),
                       );
@@ -121,8 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      PetDetailsScreen(pet: pets[index]),
+                                  builder: (context) => PetDetailsScreen(),
                                 ),
                               );
                             },
@@ -141,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(currentIndex: 0),
     );
   }
 }
