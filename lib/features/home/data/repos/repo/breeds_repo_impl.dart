@@ -3,6 +3,7 @@ import 'package:animal_app/features/home/data/models/breeds.dart';
 import 'package:animal_app/features/home/data/repos/data_source/breeds_remote_data_source.dart';
 import 'package:animal_app/features/home/data/repos/repo/breeds_repo.dart';
 import 'package:injectable/injectable.dart';
+
 @Injectable(as: BreedsRepoContract)
 class BreedsRepoImpl implements BreedsRepoContract {
   final BreedsRemoteContract _remoteContract;
@@ -12,8 +13,11 @@ class BreedsRepoImpl implements BreedsRepoContract {
     required int limit,
     required int page,
   }) async {
+    return await _remoteContract.getBreeds(limit: limit, page: page);
+  }
 
-      return await _remoteContract.getBreeds(limit: limit, page: page);
-  
+  @override
+  Future<ApiResult<List<Breeds>>> searchBreeds({required String query}) async {
+    return await _remoteContract.searchBreeds(query: query);
   }
 }

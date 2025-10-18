@@ -14,6 +14,12 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart' as _i528;
 
+import '../../features/Favorite/data/repos/data_source/fav_remote_contract.dart'
+    as _i518;
+import '../../features/Favorite/data/repos/data_source/fav_remote_impl.dart'
+    as _i465;
+import '../../features/Favorite/data/repos/repo/fav_repo.dart' as _i1056;
+import '../../features/Favorite/data/repos/repo/fav_repo_impl.dart' as _i259;
 import '../../features/home/data/repos/data_source/breeds_remote_data_source.dart'
     as _i185;
 import '../../features/home/data/repos/data_source/breeds_remote_imp.dart'
@@ -42,6 +48,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i185.BreedsRemoteContract>(
       () => _i259.BreedsRemoteImp(gh<_i492.ApiService>()),
+    );
+    gh.factory<_i518.FavRemoteContract>(
+      () => _i465.FavRemoteImpl(gh<_i492.ApiService>()),
+    );
+    gh.factory<_i1056.FavRepo>(
+      () => _i259.FavRepoImpl(gh<_i518.FavRemoteContract>()),
     );
     gh.factory<_i631.BreedsRepoContract>(
       () => _i228.BreedsRepoImpl(gh<_i185.BreedsRemoteContract>()),

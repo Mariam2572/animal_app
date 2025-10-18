@@ -1,15 +1,12 @@
-// core/constants/constants.dart
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class Constants {
-  Constants._();
-
-  // API
-  static const String baseUrl = 'https://api.thecatapi.com/v1/';
+static  final apiKey = dotenv.env['API_KEY'];
+static final baseUrl = dotenv.env['BASE_URL'];
   static const String breedsEndpoint = 'breeds';
-
-  // Config
-  static const bool isDebugMode = true; // Change in release mode
-  
-  // Timeouts
+  static const String favoritesEndpoint = 'favourites';
+  static const String searchEndpoint = 'breeds/search';
+  static const bool isDebugMode = true; 
   static const Duration connectionTimeout = Duration(seconds: 60);
   static const Duration receiveTimeout = Duration(seconds: 60);
 }

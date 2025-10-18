@@ -6,4 +6,7 @@ abstract interface class BreedsRepoContract {
     required int limit,
     required int page,
   });
+  Future<ApiResult<List<Breeds>>> searchBreeds({
+    required String query,
+  });
 }

@@ -1,21 +1,15 @@
 import 'package:animal_app/Core/theme/app_color.dart';
+import 'package:animal_app/features/home/data/models/breeds.dart';
+import 'package:animal_app/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 class PetCard extends StatelessWidget {
-  final String name;
-  final String gender;
-  final String age;
-  final String distance;
-  final String image;
+final Breeds? pet;
   final VoidCallback onTap;
 
   const PetCard({
     Key? key,
-    required this.name,
-    required this.gender,
-    required this.age,
-    required this.distance,
-    required this.image,
+  required this.pet,
     required this.onTap,
   }) : super(key: key);
 
@@ -34,7 +28,8 @@ class PetCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: CachedNetworkImage(
-                imageUrl: image,
+                imageUrl: pet?.referenceImageId
+                              ?.toImageUrl()??'',
                 width: 80,
                 height: 100,
                 fit: BoxFit.cover,
@@ -70,7 +65,7 @@ class PetCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
+                    pet?.name??'Unknown',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -79,7 +74,7 @@ class PetCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    gender,
+                    pet?.temperament??'Unknown',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColor.gray,
@@ -87,7 +82,7 @@ class PetCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    age,
+                    pet?.lifeSpan??'Unknown',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColor.gray,
@@ -103,7 +98,7 @@ class PetCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        distance,
+                        pet?.origin??'Unknown',
                         style: TextStyle(
                           fontSize: 13,
                           color: AppColor.gray,

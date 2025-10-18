@@ -1,6 +1,7 @@
 import 'package:animal_app/Core/theme/app_color.dart';
 import 'package:animal_app/features/home/presentation/cubit/home_cubit.dart';
 import 'package:animal_app/features/home/presentation/screens/details_screen.dart';
+import 'package:animal_app/features/home/presentation/widgets/erroe_widget.dart';
 import 'package:animal_app/features/home/presentation/widgets/pet_card_widget.dart';
 import 'package:animal_app/features/home/presentation/widgets/search_field.dart';
 import 'package:animal_app/features/home/presentation/widgets/static_tabs.dart';
@@ -36,41 +37,102 @@ class HomeScreen extends StatelessWidget {
               Expanded(
                 child: BlocBuilder<HomeCubit, HomeState>(
                   builder: (context, state) {
+                    final isSearching = state.isSearching;
+                    final searchResults = state.searchBreeds ?? [];
+                    final normalBreeds = state.breeds;
                     if (state.state.isLoading) {
                       return Skeletonizer(
                         enabled: true,
                         child: ListView.separated(
                           itemCount: 5,
+                          physics: const NeverScrollableScrollPhysics(),
                           separatorBuilder: (context, index) =>
                               const SizedBox(height: 16),
                           itemBuilder: (context, index) {
                             return PetCard(
-                              name: 'No Name',
-                              gender: 'No Gender',
-                              age: 'No Age',
-                              distance: 'No Distance',
-                              image: 'No Image',
+                              pet: null,
                               onTap: () {},
                             );
                           },
                         ),
                       );
                     }
+                    if (state.state.isFailure) {
+                      return CustomErrorWidget(
+                        onPressed: () {
+                          if (isSearching) {
+                                  context.read<HomeCubit>().searchBreeds(
+                                    state.searchQuery,
+                                  );
+                                } else {
+                                  context.read<HomeCubit>().getBreeds();
+                                }
+                        },
+                        errorMessage: state.errorMessage,
+                      );
+                    }
+
+                    if (isSearching && searchResults.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.search_off,
+                              size: 60,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No results found for "${state.searchQuery}"',
+                              style: const TextStyle(fontSize: 16),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16),
+                            TextButton(
+                              onPressed: () {
+                                context.read<HomeCubit>().clearSearch();
+                              },
+                              child: const Text('Clear Search'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    if (!isSearching && normalBreeds.isEmpty) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.pets,
+                              size: 60,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              'No pets found',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
                     return ListView.separated(
-                      itemCount: state.breeds.length,
+                      itemCount: isSearching
+                          ? searchResults.length
+                          : normalBreeds.length,
                       separatorBuilder: (context, index) =>
                           const SizedBox(height: 16),
                       itemBuilder: (context, index) {
-                        final breed = state.breeds[index];
-                        final breedImage = breed.referenceImageId?.toImageUrl();
+                        if (isSearching) {
+                          final searchBreed = searchResults[index];
+                          
 
-                        if (state.state.isSuccess) {
                           return PetCard(
-                            name: breed.name ?? 'No Name',
-                            gender: breed.temperament ?? 'No Gender',
-                            age: breed.lifeSpan ?? 'No Age',
-                            distance: breed.origin ?? 'No Distance',
-                            image: breedImage ?? 'No Image',
+                          pet: searchBreed,
                             onTap: () {
                               Navigator.push(
                                 context,
@@ -81,8 +143,18 @@ class HomeScreen extends StatelessWidget {
                             },
                           );
                         } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                          final breed = normalBreeds[index];
+                        
+                          return PetCard(
+                          pet: breed,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PetDetailsScreen(),
+                                ),
+                              );
+                            },
                           );
                         }
                       },

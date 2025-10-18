@@ -15,9 +15,20 @@ class BreedsRemoteImp implements BreedsRemoteContract {
     required int page,
   }) {
     return apiExecuter(
+      endpoint: 'Get breeds call',
       apiCall: () {
         return _apiService.getBreeds(limit: limit, page: page);
       },
     );
+  }
+
+  @override
+  Future<ApiResult<List<Breeds>>> searchBreeds({required String query}) {
+  return apiExecuter(
+    endpoint: 'Search breeds call',
+    apiCall: () async {
+      return await _apiService.searchBreeds(q: query);
+    },
+  );
   }
 }

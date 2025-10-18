@@ -3,12 +3,14 @@ import 'package:animal_app/Core/helper/my_bloc_observer.dart';
 import 'package:animal_app/Core/theme/app_theme.dart';
 import 'package:animal_app/Core/utils/routing/app_routes.dart';
 import 'package:animal_app/Core/utils/routing/routes_genrator.dart';
-import 'package:animal_app/features/layout/main_navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
   configureDependencies();
   Bloc.observer = MyBlocObserver();

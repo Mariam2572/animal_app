@@ -2,6 +2,7 @@
 import 'package:animal_app/Core/Network%20copy/api_services.dart';
 import 'package:animal_app/Core/constants/constants.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -29,7 +30,7 @@ abstract class DioModule {
         connectTimeout: const Duration(seconds: 60),
         receiveTimeout: const Duration(seconds: 60),
         sendTimeout: const Duration(seconds: 60),
-        baseUrl: Constants.baseUrl,
+        baseUrl: dotenv.env['BASE_URL']!,
         headers: {
           'Content-Type': 'application/json',
           // 'Accept': 'application/json',
