@@ -50,5 +50,5 @@ jobs:
         with:
           appId: ${{ secrets.APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.GOOGLE_APP_CREDENTIALS }}  
-          groups: testers
+          groups: Testers
           file: build/app/outputs/flutter-apk/app-release.apk
