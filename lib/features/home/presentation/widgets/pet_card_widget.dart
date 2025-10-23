@@ -33,18 +33,6 @@ final Breeds? pet;
                 width: 80,
                 height: 100,
                 fit: BoxFit.cover,
-                // placeholder: (context, url) {
-                //   return Container(
-                //     width: 80,
-                //     height: 100,
-                //     color: AppColor.lightCyan,
-                //     child: Center(
-                //       child: CircularProgressIndicator(
-                //         color: AppColor.primary,
-                //       ),
-                //     ),
-                //   );
-                // },
                 errorWidget: (context, error, stackTrace) {
                   return Container(
                     width: 80,

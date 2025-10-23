@@ -1,13 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-
 import 'package:animal_app/features/home/data/models/breeds.dart';
 import 'package:animal_app/features/home/data/repos/repo/breeds_repo.dart';
-
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
